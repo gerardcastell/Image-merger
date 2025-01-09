@@ -90,19 +90,19 @@ class GroupImagesService:
         Convert a Pillow Image object to bytes.
         """
         buffer = io.BytesIO()
-        image.save(buffer, format="PNG")
+        image.save(buffer, format="JPEG", quality=85)
         buffer.seek(0)
         return buffer.getvalue()
 
 
 # Example usage (uncomment to test):
 if __name__ == "__main__":
-    with open("image_1.png", "rb") as img1, open("image_2.png", "rb") as img2:
+    with open("image_1.jpg", "rb") as img1, open("image_2.jpg", "rb") as img2:
         first_image_bytes = img1.read()
         second_image_bytes = img2.read()
         orientation = MergeOrientation.VERTICAL
         input_data = GroupImagesInputDTO(first_image_bytes, second_image_bytes, orientation)
         service = GroupImagesService()
         merged_image_bytes = service(input_data)
-        with open("merged_image.png", "wb") as merged_img_file:
+        with open("merged_image.jpeg", "wb") as merged_img_file:
             merged_img_file.write(merged_image_bytes)
